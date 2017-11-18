@@ -36,15 +36,23 @@ https://developers.google.com/maps/documentation/javascript/adding-a-legend
       #floating-panel {
         position: absolute;
         top: 10px;
-        left: 25%;
+        left: 15%;
         z-index: 5;
         background-color: #fff;
-        padding: 5px;
-        border: 1px solid #999;
+
         text-align: center;
-        font-family: 'Roboto','sans-serif';
+
         line-height: 30px;
         padding-left: 10px;
+
+        background: #fff;
+        padding: 5px;
+        font-size: 14px;
+        font-family: Arial;
+        border: 1px solid #ccc;
+        box-shadow: 0 2px 2px rgba(33, 33, 33, 0.4);
+        display: none;
+        margin-top: 150px
       }
       #right-panel {
         font-family: 'Roboto','sans-serif';
@@ -86,6 +94,44 @@ https://developers.google.com/maps/documentation/javascript/adding-a-legend
         border: 1px solid #ccc;
         box-shadow: 0 2px 2px rgba(33, 33, 33, 0.4);
         display: none;
+        margin-top: 150px;
+
+      }
+      #txt{
+        position: absolute;
+        font-size:60px;
+        color:maroon;
+
+        background: #fff;
+        border: 1px solid #ccc;
+        box-shadow: 0 2px 2px rgba(33, 33, 33, 0.4);
+        top: 130px;
+        right: 20%;
+
+      }
+      #redwarning{
+        position: absolute;
+        font-size:40px;
+        color:maroon;
+
+        background: red;
+        border: 1px solid #ccc;
+        box-shadow: 0 2px 2px rgba(33, 33, 33, 0.4);
+        top: 210px;
+        right: 24%;
+
+      }
+      #orangewarning{
+        position: absolute;
+        font-size:40px;
+        color:maroon;
+
+        background: orange;
+        border: 1px solid #ccc;
+        box-shadow: 0 2px 2px rgba(33, 33, 33, 0.4);
+        top: 210px;
+        right: 24%;
+
       }
 
 
@@ -100,18 +146,71 @@ https://developers.google.com/maps/documentation/javascript/adding-a-legend
           width: auto;
         }
       }
+
     </style>
   </head>
+
 <div id="floating-panel">
+  <a>Enter Class
   <input type="text" class="form-control" id="src1" name="src1" placeholder="">
   <button type="Submit" id="submit">Submit</button>
+</a>
 </div>
 
-  <body>
+<div>
+  <script>
+  function startTime(){
+    var today=new Date();
+    var h=today.getHours();
+    if(h > 12){
+      h = h-12;
+    }
+    var m=today.getMinutes();
+    var s=today.getSeconds();
+
+    h = 7;
+    m = 50;
+    s = 15;
+
+    h=checkTime(h);
+    m=checkTime(m);
+    s=checkTime(s);
+
+    document.getElementById('txt').innerHTML=h+":"+m+":"+s;
+    if(m == 55){
+      document.getElementById('redwarning').innerHTML="RUN!";
+    }
+    if(m == 50){
+      document.getElementById('orangewarning').innerHTML="Hurry!";
+    }
+
+    // t=setTimeout(function(){startTime()},500);
+  }
+  function checkTime(i){
+    if(i<10){
+      i="0"+i;
+    }
+    return i;
+  }
+  </script>
+</div>
+
+
+
+
+
+  <body onload="startTime()">
+    <div id="txt">
+    </div>
+    <div id="redwarning">
+    </div>
+    <div id="orangewarning">
+    </div>
+
+
     <style>
     body{
         background: url(static/img/university5.jpg);
-        background-repeat: no-repeat;
         background-size: cover;
         background-size: 100%;
     }
@@ -289,7 +388,7 @@ styles: [
 
         var control = document.getElementById('floating-panel');
         control.style.display = 'block';
-        map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
+        // map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
 
         var onChangeHandler = function() {
           calculateAndDisplayRoute(latlong, directionsService, directionsDisplay);
@@ -309,6 +408,68 @@ styles: [
 
 	// To add the marker to the map, call setMap();
 	// marker.setMap(map);
+	/////////////////////////////////////////////////////////////
+
+  //////////////////////////////////////////////////////////////
+
+	// display the customized icons
+	// add any needed icons using the below format in var icons
+	var icons = {
+          parking: {
+            name: 'Parking',
+            icon: 'https://newcdn.iconfinder.com/data/icons/rental-icon/240/parking-20.png'
+          },
+          library: {
+            name: 'Library',
+            icon: 'https://cdn0.iconfinder.com/data/icons/octicons/1024/book-20.png'
+          },
+          titan_student_union: {
+            name: 'Titan Student Union',
+            icon: 'https://newcdn.iconfinder.com/data/icons/pittogrammi/142/97-20.png'
+          },
+	  book_store: {
+            name: 'Book Store',
+            icon: 'https://cdn4.iconfinder.com/data/icons/essential-app-1/16/shopping-bag-paper-store-20.png'
+          }
+        };
+
+	// array of icons to be used on the map.
+        var features = [
+          {
+            position: new google.maps.LatLng(33.880303, -117.881738),
+            type: 'parking'
+          }, {
+            position: new google.maps.LatLng(33.883071, -117.888595),
+            type: 'parking'
+          }, {
+            position: new google.maps.LatLng(33.884843, -117.889426),
+            type: 'parking'
+          }, {
+            position: new google.maps.LatLng(33.879039, -117.888448),
+            type: 'parking'
+          }, {
+            position: new google.maps.LatLng(33.883071, -117.888595),
+            type: 'parking'
+          }, {
+            position: new google.maps.LatLng(33.881101, -117.885359),
+            type: 'library'
+          }, {
+            position: new google.maps.LatLng(33.881402, -117.887644),
+            type: 'titan_student_union'
+          }, {
+            position: new google.maps.LatLng(33.881897, -117.886883),
+            type: 'book_store'
+          }
+        ];
+
+        // put the markers on the map
+        features.forEach(function(feature) {
+          var marker = new google.maps.Marker({
+            position: feature.position,
+            icon: icons[feature.type].icon,
+            map: map
+          });
+        });
 	/////////////////////////////////////////////////////////////
       }
 
