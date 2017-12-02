@@ -15,7 +15,7 @@ class GMaps():
 			return self.li
 		else:
 			for steps in self.directions[0]['legs'][0]['steps'][:-1]:
-			    self.li.append((steps['html_instructions']) + ' for ' + steps['duration']['text'] + '(' + steps['distance']['text'] + ')')
+			 self.li.append((steps['html_instructions']) + ' for ' + steps['duration']['text'] + '(' + steps['distance']['text'] + ')')
 			self.li.append(self.directions[0]['legs'][0]['steps'][-1]['html_instructions'])
 			self.li.append('Total: ' + self.directions[0]['legs'][0]['duration']['text']+ ', ' + self.directions[0]['legs'][0]['distance']['text'])
 			return self.li
